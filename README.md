@@ -2,4 +2,4 @@
 
 This repository contains my professional profile. 
 
-👉 **[View My Profile Here](https://www.linkedin.com/in/sai-dari-710966254/)**
+👉 **[View My Profile Here](https://saiteja6006.github.io/)**
