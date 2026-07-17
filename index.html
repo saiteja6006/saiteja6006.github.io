@@ -4,63 +4,114 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sai Dari | Software Engineer</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Premium Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        h1, h2, h3 {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        code, pre {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .txt-cursor {
+            animation: blink 0.8s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
 </head>
-<body class="bg-gray-50 text-gray-900 font-sans antialiased">
+<body class="bg-zinc-950 text-zinc-300 font-sans antialiased selection:bg-indigo-500/30 selection:text-indigo-200">
 
     <!-- Header / Hero Section -->
-    <header class="bg-white border-b border-gray-200 py-16 px-6 text-center">
-        <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl">Sai Dari</h1>
-        <p class="mt-4 text-xl text-gray-600 max-w-2xl mx-auto">
-            Software Engineer specializing in Python, Computer Vision, and Open-Source Robotics.
+    <header class="relative bg-zinc-900/20 border-b border-zinc-900 py-24 px-6 text-center backdrop-blur-md overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[250px] bg-indigo-500/5 blur-[120px] rounded-full pointer-events-none"></div>
+        
+        <div class="inline-flex items-center gap-2 bg-zinc-900 border border-zinc-800/80 rounded-full px-4 py-1.5 text-xs text-zinc-400 font-medium mb-6">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            Available for Open Source & Collaboration
+        </div>
+
+        <h1 class="text-5xl font-bold tracking-tight text-white sm:text-6xl bg-gradient-to-b from-white via-zinc-200 to-zinc-500 bg-clip-text text-transparent">
+            Sai Dari
+        </h1>
+        
+        <p class="mt-6 text-xl text-zinc-400 max-w-2xl mx-auto font-medium min-h-[32px]">
+            I am a <span id="typewriter-text" class="text-indigo-400 font-semibold border-r-2 border-indigo-400 pr-1 tracking-wide"></span>
         </p>
-        <div class="mt-6 flex justify-center space-x-4">
-            <a href="https://github.com/SaiDari" class="text-sm font-semibold text-indigo-600 hover:text-indigo-550">GitHub ↗</a>
-            <span class="text-gray-300">|</span>
-            <a href="#" class="text-sm font-semibold text-indigo-600 hover:text-indigo-550">LinkedIn ↗</a>
+
+        <div class="mt-8 flex justify-center space-x-6">
+            <!-- Active GitHub Link -->
+            <a href="https://github.com/saiteja6006" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-zinc-400 hover:text-white border border-zinc-800 bg-zinc-900/50 hover:bg-zinc-900 px-4 py-2 rounded-lg transition-all duration-200 flex items-center gap-1.5 shadow-sm">
+                GitHub ↗
+            </a>
+            <!-- Active LinkedIn Link -->
+            <a href="https://www.linkedin.com/in/sai-dari-71096b254/" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-zinc-400 hover:text-white border border-zinc-800 bg-zinc-900/50 hover:bg-zinc-900 px-4 py-2 rounded-lg transition-all duration-200 flex items-center gap-1.5 shadow-sm">
+                LinkedIn ↗
+            </a>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="max-w-4xl mx-auto px-6 py-12 space-y-16">
+    <main class="max-w-4xl mx-auto px-6 py-20 space-y-24">
 
         <!-- Open Source Contributions -->
         <section>
-            <h2 class="text-2xl font-bold text-gray-900 mb-6 border-b pb-2 flex items-center">
-                <span>🛠️ Open Source Contributions</span>
+            <h2 class="text-3xl font-bold tracking-tight text-white mb-10 border-b border-zinc-900 pb-4 flex items-center space-x-3">
+                <span class="text-indigo-400 font-normal">01 /</span>
+                <span>Open Source Contributions</span>
             </h2>
             
-            <div class="space-y-8">
+            <div class="space-y-6">
                 <!-- Contribution 1: LeRobot Circular Import -->
-                <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-                    <div class="flex justify-between items-start">
-                        <h3 class="text-xl font-bold text-gray-900">Hugging Face — LeRobot</h3>
-                        <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded">PR Submitted</span>
+                <div class="group relative bg-zinc-900/30 p-8 rounded-2xl border border-zinc-900 shadow-xl backdrop-blur-sm hover:border-zinc-800/80 hover:bg-zinc-900/50 transition-all duration-300">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <h3 class="text-xl font-bold tracking-tight text-zinc-100 group-hover:text-white transition-colors duration-200">Hugging Face — LeRobot</h3>
+                        <div>
+                            <span class="bg-emerald-500/5 text-emerald-400 border border-emerald-500/10 text-xs font-semibold px-3 py-1 rounded-full tracking-wide uppercase">
+                                PR Submitted
+                            </span>
+                        </div>
                     </div>
-                    <p class="text-sm text-gray-500 mt-1">Core Robotics Library | Python, Git</p>
-                    <p class="mt-3 text-gray-600">
-                        Diagnosed and resolved a fatal cross-platform package initialization blocker on Windows Conda environments caused by an internal namespace collision with Python's standard library (<code class="bg-gray-100 px-1 rounded text-red-600">types.py</code>). Refactored internal dependencies to ensure robust cross-platform stability.
+                    <p class="text-xs font-medium text-indigo-400/80 font-mono uppercase tracking-widest mt-2">Core Robotics Library | Python, Git</p>
+                    <p class="mt-4 text-zinc-400 leading-relaxed font-light">
+                        Diagnosed and resolved a fatal cross-platform package initialization blocker on Windows Conda environments caused by an internal namespace collision with Python's standard library (<code class="bg-zinc-900 px-1.5 py-0.5 rounded text-rose-400 text-sm border border-zinc-800">types.py</code>). Refactored internal dependencies to ensure robust cross-platform stability.
                     </p>
-                    <div class="mt-4">
-                        <a href="#" class="inline-flex items-center text-sm font-medium text-indigo-600 hover:underline">
-                            View Pull Request ↗
+                    <div class="mt-6">
+                        <a href="https://github.com/huggingface/lerobot" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors duration-200 group-link">
+                            View Pull Request 
+                            <span class="inline-block transform group-hover:translate-x-1 transition-transform duration-200 ml-1">↗</span>
                         </a>
                     </div>
                 </div>
 
                 <!-- Contribution 2: OpenCV Bug Documented -->
-                <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-                    <div class="flex justify-between items-start">
-                        <h3 class="text-xl font-bold text-gray-900">OpenCV Camera Pipeline Refactor</h3>
-                        <span class="bg-amber-100 text-amber-800 text-xs font-semibold px-2.5 py-0.5 rounded">Issue Documented</span>
+                <div class="group relative bg-zinc-900/30 p-8 rounded-2xl border border-zinc-900 shadow-xl backdrop-blur-sm hover:border-zinc-800/80 hover:bg-zinc-900/50 transition-all duration-300">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <h3 class="text-xl font-bold tracking-tight text-zinc-100 group-hover:text-white transition-colors duration-200">OpenCV Camera Pipeline Refactor</h3>
+                        <div>
+                            <span class="bg-amber-500/5 text-amber-400 border border-amber-500/10 text-xs font-semibold px-3 py-1 rounded-full tracking-wide uppercase">
+                                Issue Documented
+                            </span>
+                        </div>
                     </div>
-                    <p class="text-sm text-gray-500 mt-1">Computer Vision | OpenCV, Windows-Specific Backend</p>
-                    <p class="mt-3 text-gray-600">
+                    <p class="text-xs font-medium text-indigo-400/80 font-mono uppercase tracking-widest mt-2">Computer Vision | OpenCV, Windows Backend</p>
+                    <p class="mt-4 text-zinc-400 leading-relaxed font-light">
                         Identified and thoroughly documented an OS-specific test suite failure involving OpenCV's image decoding backend. Isolated how Windows decodes alpha channels (4-channel BGRA) vs Linux (3-channel RGB) during mock camera streams, proposing defensive channel-slicing fallbacks.
                     </p>
-                    <div class="mt-4">
-                        <a href="#" class="inline-flex items-center text-sm font-medium text-indigo-600 hover:underline">
-                            View Bug Report ↗
+                    <div class="mt-6">
+                        <a href="https://github.com/huggingface/lerobot" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors duration-200 group-link">
+                            View Bug Report 
+                            <span class="inline-block transform group-hover:translate-x-1 transition-transform duration-200 ml-1">↗</span>
                         </a>
                     </div>
                 </div>
@@ -70,9 +121,53 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-100 text-center py-8 text-sm text-gray-500 border-t border-gray-200">
+    <footer class="bg-zinc-950 text-center py-16 text-xs text-zinc-600 border-t border-zinc-900/50 tracking-wider uppercase">
         <p>&copy; 2026 Sai Dari. Built with GitHub Pages & Tailwind CSS.</p>
     </footer>
+
+    <!-- Dynamic Typewriter Script Engine -->
+    <script>
+        const words = [
+            "Software Engineer.",
+            "Open Source Contributor.",
+            "Computer Vision Developer.",
+            "Robotics Problem Solver."
+        ];
+        
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const targetElement = document.getElementById("typewriter-text");
+        
+        function typeEffect() {
+            const currentWord = words[wordIndex];
+            
+            if (isDeleting) {
+                targetElement.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                targetElement.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
+            
+            let typingSpeed = isDeleting ? 40 : 80;
+            
+            if (!isDeleting && charIndex === currentWord.length) {
+                typingSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                typingSpeed = 400;
+            }
+            
+            setTimeout(typeEffect, typingSpeed);
+        }
+        
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(typeEffect, 500);
+        });
+    </script>
 
 </body>
 </html>
