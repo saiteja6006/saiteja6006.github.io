@@ -21,12 +21,20 @@
         ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
 
-        /* Custom Hardware Accelerated Utilities for AI Pipeline */
-        .pipeline-glow {
-            box-shadow: 0 0 25px -5px var(--glow-color);
+        /* Hardware Accelerated Robot Leg-Jog Animation */
+        @keyframes robot-run {
+            0%, 100% { transform: translateY(-50%) translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-50%) translateY(-2px) rotate(4deg); }
+            50% { transform: translateY(-50%) translateY(0px) rotate(0deg); }
+            75% { transform: translateY(-50%) translateY(-2px) rotate(-4deg); }
         }
-        .pipeline-line-progress {
-            transition: width 0.2s ease-out;
+        
+        .robot-active-running {
+            animation: robot-run 0.2s infinite linear;
+        }
+
+        .track-progress-line {
+            transition: width 0.1s ease-out;
         }
     </style>
 </head>
@@ -66,52 +74,39 @@
         </div>
     </header>
 
-    <!-- CONTENT-SYNCHRONIZED AI SCROLL PIPELINE COMPONENT -->
-    <div class="bg-zinc-950 border-b border-zinc-900/60 sticky top-0 z-50 backdrop-blur-md py-6 hidden md:block select-none">
-        <div id="pipeline-container" class="max-w-5xl mx-auto px-6 relative">
+    <!-- PREMIUM CAREER JOURNEY STICKY TRACKER -->
+    <div class="bg-zinc-950/90 border-b border-zinc-900/80 sticky top-0 z-50 backdrop-blur-md py-5 hidden md:block select-none overflow-hidden">
+        <div id="career-track-container" class="max-w-4xl mx-auto px-12 relative h-10">
             
-            <!-- Matrix Particle Layer Canvas -->
-            <canvas id="pipeline-canvas" class="absolute inset-0 pointer-events-none z-10"></canvas>
+            <!-- Canvas For Kinetic Footstep Particles -->
+            <canvas id="track-spark-canvas" class="absolute inset-0 pointer-events-none z-10"></canvas>
             
-            <div class="flex items-center justify-between relative z-20">
-                <!-- Background Line Track -->
-                <div class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-[2px] bg-zinc-900 z-0"></div>
-                <!-- Dynamic Active Filling Line -->
-                <div id="pipeline-progress-line" class="absolute left-0 top-1/2 -translate-y-1/2 w-0 h-[2px] bg-gradient-to-r from-cyan-500 via-indigo-500 to-emerald-500 z-0 pipeline-line-progress"></div>
+            <!-- Structural Track Line Wires -->
+            <div class="absolute left-12 right-12 top-1/2 -translate-y-1/2 h-[1px] bg-zinc-900 z-0"></div>
+            <div id="career-track-progress" class="absolute left-12 top-1/2 -translate-y-1/2 w-0 h-[1px] bg-gradient-to-r from-purple-500 via-indigo-500 to-emerald-500 z-0 track-progress-line"></div>
 
-                <!-- Node 1: Embedding Pipeline -->
-                <div id="node-embedding" class="relative z-10 flex flex-col items-center group transition-all duration-300 opacity-30 scale-95">
-                    <div class="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center font-mono text-xs font-bold text-cyan-400 group-[.active]:border-cyan-500 group-[.active]:bg-cyan-950/40 transition-all duration-300" style="--glow-color: rgba(34, 211, 238, 0.4);">
-                        01
-                    </div>
-                    <span class="absolute -bottom-6 text-[10px] font-mono tracking-wider whitespace-nowrap uppercase text-zinc-500 group-[.active]:text-cyan-400 transition-colors">Embedding Pipeline</span>
-                </div>
-
-                <!-- Node 2: Vector Pipeline -->
-                <div id="node-vector" class="relative z-10 flex flex-col items-center group transition-all duration-300 opacity-30 scale-95">
-                    <div class="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center font-mono text-xs font-bold text-indigo-400 group-[.active]:border-indigo-500 group-[.active]:bg-indigo-950/40 transition-all duration-300" style="--glow-color: rgba(99, 102, 241, 0.4);">
-                        02
-                    </div>
-                    <span class="absolute -bottom-6 text-[10px] font-mono tracking-wider whitespace-nowrap uppercase text-zinc-500 group-[.active]:text-indigo-400 transition-colors">Vector Pipeline</span>
-                </div>
-
-                <!-- Node 3: Sai Dari Intelligence Layer -->
-                <div id="node-saidari" class="relative z-10 flex flex-col items-center group transition-all duration-300 opacity-30 scale-95">
-                    <div class="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center font-mono text-xs font-bold text-purple-400 group-[.active]:border-purple-500 group-[.active]:bg-purple-950/40 transition-all duration-300" style="--glow-color: rgba(168, 85, 247, 0.4);">
-                        03
-                    </div>
-                    <span class="absolute -bottom-6 text-[10px] font-mono tracking-wider whitespace-nowrap uppercase text-zinc-500 group-[.active]:text-purple-300 transition-colors">Sai Dari Core</span>
-                </div>
-
-                <!-- Node 4: Synthesized Skills Synthesis -->
-                <div id="node-skills" class="relative z-10 flex flex-col items-center group transition-all duration-300 opacity-30 scale-95">
-                    <div class="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center font-mono text-xs font-bold text-emerald-400 group-[.active]:border-emerald-500 group-[.active]:bg-emerald-950/40 transition-all duration-300" style="--glow-color: rgba(16, 185, 129, 0.4);">
-                        04
-                    </div>
-                    <span class="absolute -bottom-6 text-[10px] font-mono tracking-wider whitespace-nowrap uppercase text-zinc-500 group-[.active]:text-emerald-400 transition-colors">Skills Engine</span>
-                </div>
+            <!-- Visual Career Milestone Anchors -->
+            <div class="absolute left-12 right-12 top-1/2 -translate-y-1/2 flex justify-between px-1 pointer-events-none z-20 font-mono text-[10px] tracking-wider text-zinc-600 uppercase">
+                <span id="mark-kpmg" class="bg-zinc-950 px-2 transition-colors duration-300">KPMG Intern</span>
+                <span id="mark-walmart" class="bg-zinc-950 px-2 transition-colors duration-300">Walmart AI</span>
+                <span id="mark-bcbs" class="bg-zinc-950 px-2 transition-colors duration-300">BCBS Senior</span>
+                <span id="mark-goal" class="bg-zinc-950 px-2 flex items-center gap-1 text-zinc-700 transition-colors duration-300">Goal 🏁</span>
             </div>
 
+            <!-- RUNNING MINI ROBOT AGENT -->
+            <div id="journey-robot" class="absolute top-1/2 -translate-y-1/2 left-12 -ml-4 z-30 will-change-transform pointer-events-none transition-all duration-75 ease-out">
+                <div id="robot-graphic" class="text-indigo-400">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="drop-shadow-[0_0_8px_rgba(99,102,241,0.6)]">
+                        <path d="M12 2v2M12 2a0.5 0.5 0 1 0 0 1" fill="currentColor"/>
+                        <rect x="5" y="5" width="14" height="8" rx="2" fill="#09090b"/>
+                        <path d="M9 9h.01M15 9h.01" stroke="#22d3ee" stroke-width="2.5"/>
+                        <path d="M10 13h4"/>
+                        <rect x="7" y="14" width="10" height="6" rx="1" fill="#09090b"/>
+                        <path d="M5 16h2M17 16h2"/>
+                    </svg>
+                </div>
+            </div>
+            
         </div>
     </div>
 
@@ -121,10 +116,10 @@
         <!-- Left Side: Core Engineering Narrative -->
         <div class="lg:col-span-2 space-y-24">
             
-            <!-- TARGET 1: EMBEDDING PIPELINE LINKED REGION -->
-            <section id="content-embedding" class="space-y-6 pt-4 transition-all duration-500">
-                <h2 class="text-2xl font-bold text-white border-b border-zinc-900 pb-3 tracking-tight flex items-center gap-3">
-                    <span class="text-xs font-mono text-cyan-400 bg-cyan-950/30 border border-cyan-900 px-2 py-0.5 rounded">01</span> The Engineering Journey & Impact
+            <!-- EXECUTIVE ROADMAP INTRO -->
+            <section class="space-y-6">
+                <h2 class="text-2xl font-bold text-white border-b border-zinc-900 pb-3 tracking-tight">
+                    The Engineering Journey & Impact
                 </h2>
                 
                 <div class="text-zinc-400 font-light leading-relaxed space-y-5 text-base">
@@ -136,7 +131,7 @@
 
                     <!-- KPMG Era Narrative Summary -->
                     <div class="border-l-2 border-zinc-900/60 pl-4 my-4 space-y-1">
-                        <span class="text-xs font-mono uppercase tracking-wider text-zinc-500 block">The Foundation — KPMG</span>
+                        <span class="text-xs font-mono uppercase tracking-wider text-zinc-500 block">The Foundation — KPMG (Internship)</span>
                         <p>
                             I cut my teeth on massive data landscapes at <span class="text-indigo-400 font-medium">KPMG</span>, architecting distributed PySpark pipelines on AWS EMR clusters to crunch over <strong class="text-zinc-200 font-medium">2 TB of monthly claims data</strong>. By deploying machine learning anomaly detection pipelines, we successfully flagged and isolated <strong class="text-zinc-200 font-medium">1,800+ high-risk fraudulent transactions every quarter</strong> before they could impact the system.
                         </p>
@@ -160,10 +155,10 @@
                 </div>
             </section>
 
-            <!-- TARGET 2: VECTOR PIPELINE LINKED REGION (WHAT + WHY + IMPACT FRAMEWORK) -->
-            <section id="content-vector" class="space-y-10 pt-4 transition-all duration-500">
-                <h2 class="text-2xl font-bold text-white border-b border-zinc-900 pb-3 tracking-tight flex items-center gap-3">
-                    <span class="text-xs font-mono text-indigo-400 bg-indigo-950/30 border border-indigo-900 px-2 py-0.5 rounded">02</span> Professional Experience Metrics
+            <!-- PROFESSIONAL EXPERIENCE SECTION (WHAT + WHY + IMPACT) -->
+            <section id="experience-timeline-anchor" class="space-y-10 pt-4">
+                <h2 class="text-2xl font-bold text-white border-b border-zinc-900 pb-3 tracking-tight">
+                    Professional Experience Metrics
                 </h2>
                 
                 <div class="space-y-14">
@@ -176,7 +171,6 @@
                         </div>
                         <p class="text-sm font-medium text-indigo-400/90 font-mono">Blue Cross Blue Shield | Dallas, TX</p>
                         
-                        <!-- WHAT + WHY + IMPACT GRID -->
                         <div class="grid grid-cols-1 gap-3 pt-2 text-sm">
                             <div class="bg-zinc-900/20 border border-zinc-900/60 p-3 rounded-xl">
                                 <span class="text-xs font-mono font-bold text-zinc-500 uppercase tracking-wider block mb-1">What:</span>
@@ -186,8 +180,8 @@
                                 <span class="text-xs font-mono font-bold text-zinc-500 uppercase tracking-wider block mb-1">Why:</span>
                                 <p class="text-zinc-300 font-light">To parse over 10K+ unstructured healthcare clinical document chunks safely within HIPAA-compliant parameters on AWS Bedrock and SageMaker.</p>
                             </div>
-                            <div class="bg-zinc-900/20 border border-zinc-900/60 p-3 rounded-xl border-l-2 border-l-cyan-500/50">
-                                <span class="text-xs font-mono font-bold text-cyan-400 uppercase tracking-wider block mb-1">Impact:</span>
+                            <div class="bg-zinc-900/20 border border-zinc-900/60 p-3 rounded-xl border-l-2 border-l-emerald-500/50">
+                                <span class="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider block mb-1">Impact:</span>
                                 <p class="text-zinc-200 font-medium font-sans">Slashed clinical evidence document retrieval times by 11 seconds, speeding up live medical review cycles.</p>
                             </div>
                         </div>
@@ -202,7 +196,6 @@
                         </div>
                         <p class="text-sm font-medium text-indigo-400/90 font-mono">Walmart | Dallas, TX</p>
                         
-                        <!-- WHAT + WHY + IMPACT GRID -->
                         <div class="grid grid-cols-1 gap-3 pt-2 text-sm">
                             <div class="bg-zinc-900/20 border border-zinc-900/60 p-3 rounded-xl">
                                 <span class="text-xs font-mono font-bold text-zinc-500 uppercase tracking-wider block mb-1">What:</span>
@@ -219,16 +212,15 @@
                         </div>
                     </div>
 
-                    <!-- Milestone 3: KPMG -->
+                    <!-- Milestone 3: KPMG (Internship) -->
                     <div class="relative border-l border-zinc-800/80 pl-6 ml-2 space-y-4">
                         <div class="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-zinc-700"></div>
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                            <h3 class="text-lg font-bold text-zinc-100">Machine Learning Engineer</h3>
+                            <h3 class="text-lg font-bold text-zinc-100">Machine Learning Intern</h3>
                             <span class="text-xs text-zinc-500 font-mono">September 2019 - July 2021</span>
                         </div>
                         <p class="text-sm font-medium text-indigo-400/90 font-mono">KPMG | Bengaluru, India</p>
                         
-                        <!-- WHAT + WHY + IMPACT GRID -->
                         <div class="grid grid-cols-1 gap-3 pt-2 text-sm">
                             <div class="bg-zinc-900/20 border border-zinc-900/60 p-3 rounded-xl">
                                 <span class="text-xs font-mono font-bold text-zinc-500 uppercase tracking-wider block mb-1">What:</span>
@@ -247,14 +239,13 @@
                 </div>
             </section>
 
-            <!-- TARGET 3:  OPEN SOURCE PROJECTS LINKED REGION -->
-            <section id="content-saidari" class="space-y-8 pt-4 transition-all duration-500">
+            <!-- OPEN SOURCE PROJECTS -->
+            <section class="space-y-8 pt-4">
                 <h2 class="text-2xl font-bold text-white border-b border-zinc-900 pb-3 tracking-tight flex items-center gap-3">
-                    <span class="text-xs font-mono text-purple-400 bg-purple-950/30 border border-purple-900 px-2 py-0.5 rounded">03</span> Open Source & Featured Projects
+                    Open Source & Featured Projects
                 </h2>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- OS Project 1 -->
                     <div class="group bg-zinc-900/20 p-6 rounded-2xl border border-zinc-900 hover:border-zinc-800 transition-all duration-300 flex flex-col justify-between">
                         <div>
                             <div class="flex items-center justify-between gap-2">
@@ -267,7 +258,6 @@
                         <a href="https://github.com/saiteja6006/Healthcare-Agentic-AI-decision-support-system" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-indigo-400 mt-5 block hover:underline">Inspect Architecture Source ↗</a>
                     </div>
 
-                    <!-- OS Project 2 -->
                     <div class="group bg-zinc-900/20 p-6 rounded-2xl border border-zinc-900 hover:border-zinc-800 transition-all duration-300 flex flex-col justify-between">
                         <div>
                             <div class="flex items-center justify-between gap-2">
@@ -281,7 +271,7 @@
                     </div>
                 </div>
 
-                <!-- Upstream Contributions Block -->
+                <!-- Upstream Contributions -->
                 <div class="bg-zinc-900/30 border border-zinc-900 rounded-2xl p-5 space-y-3">
                     <h4 class="text-sm font-bold text-zinc-200 font-mono flex items-center gap-2">
                         <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span> Community & Upstream Contributions
@@ -297,8 +287,8 @@
                 </div>
             </section>
 
-            <!-- Credentials & Academics -->
-            <section class="grid grid-cols-1 md:grid-cols-2 gap-10 pt-4">
+            <!-- Academics -->
+            <section id="academics-section-anchor" class="grid grid-cols-1 md:grid-cols-2 gap-10 pt-4">
                 <div>
                     <h2 class="text-xl font-bold text-white border-b border-zinc-900 pb-3 tracking-tight mb-4">Credentials</h2>
                     <ul class="space-y-2 text-sm text-zinc-400 font-mono">
@@ -321,10 +311,9 @@
         <!-- Right Side: Sticky Widgets -->
         <div class="space-y-12 lg:sticky lg:top-28">
             
-            <!-- TARGET 4: SKILLS ENGINE LINKED REGION -->
-            <div id="content-skills" class="bg-zinc-900/30 border border-zinc-900 rounded-2xl p-6 backdrop-blur-sm space-y-6 transition-all duration-500">
+            <div class="bg-zinc-900/30 border border-zinc-900 rounded-2xl p-6 backdrop-blur-sm space-y-6">
                 <h3 class="text-lg font-bold text-white border-b border-zinc-800 pb-2 flex items-center gap-2">
-                    <span class="text-xs font-mono text-emerald-400 bg-emerald-950/30 border border-emerald-900 px-1.5 py-0.5 rounded">04</span> Core Tech Stack
+                    Core Tech Stack
                 </h3>
                 <div class="space-y-4">
                     <div>
@@ -349,7 +338,7 @@
                 </div>
             </div>
 
-            <!-- Recruiter Interactive Chatbot Widget -->
+            <!-- Recruiter Chatbot Widget -->
             <div class="bg-zinc-900/40 border border-zinc-900 rounded-2xl shadow-2xl flex flex-col overflow-hidden h-[400px]">
                 <div class="bg-zinc-900 px-4 py-3 border-b border-zinc-800 flex items-center gap-3">
                     <div class="relative">
@@ -385,36 +374,25 @@
 
     <!-- Footer Space -->
     <footer class="bg-zinc-950 text-center py-16 text-xs text-zinc-600 border-t border-zinc-900/40 tracking-wider uppercase">
-        <p>&copy; 2026 Sai Dari. Built with GitHub Pages & Tailwind CSS.</p>
+        <p>&copy; 2026 Sai Dari. Telemetry tracking runtime online.</p>
     </footer>
 
-    <!-- Content-Synchronized Viewport & Particle Burst Engine Runtime -->
+    <!-- Robot Career Journey Progress Engine Runtime -->
     <script type="module">
-        import PortfolioChatbot from './chatbot.js';
-
         let particles = [];
         let canvas, ctx;
-        
-        // Maps precise content section boundary regions directly to top pipeline nodes
-        const pipelineStages = [
-            { id: 'content-embedding', nodeKey: 'embedding', color: '#22d3ee', basePct: 12.5 },
-            { id: 'content-vector',    nodeKey: 'vector',    color: '#6366f1', basePct: 37.5 },
-            { id: 'content-saidari',   nodeKey: 'saidari',   color: '#a855f7', basePct: 62.5 },
-            { id: 'content-skills',    nodeKey: 'skills',    color: '#10b981', basePct: 87.5 }
-        ];
+        let lastScrollY = window.scrollY;
+        let runningTimeout;
 
-        const nodeStates = { embedding: false, vector: false, saidari: false, skills: false };
-
-        class MatrixParticle {
-            constructor(x, y, color) {
+        class KineticSpark {
+            constructor(x, y) {
                 this.x = x;
                 this.y = y;
-                this.size = Math.random() * 3 + 1.5;
-                this.vx = (Math.random() - 0.5) * 7;
-                this.vy = (Math.random() - 0.5) * 7;
-                this.color = color;
+                this.size = Math.random() * 2 + 1;
+                this.vx = -1.2 - Math.random() * 2.5; // Emits backward relative to motion
+                this.vy = (Math.random() - 0.5) * 2.5;
                 this.alpha = 1.0;
-                this.decay = Math.random() * 0.02 + 0.015;
+                this.decay = Math.random() * 0.05 + 0.03;
             }
             update() {
                 this.x += this.vx;
@@ -424,7 +402,7 @@
             draw() {
                 ctx.save();
                 ctx.globalAlpha = this.alpha;
-                ctx.fillStyle = this.color;
+                ctx.fillStyle = Math.random() > 0.4 ? '#6366f1' : '#a855f7';
                 ctx.fillRect(this.x, this.y, this.size, this.size);
                 ctx.restore();
             }
@@ -436,89 +414,94 @@
             canvas.height = canvas.parentElement.offsetHeight;
         }
 
-        function executeParticleBurst(nodeKey, color) {
-            const nodeEl = document.getElementById(`node-${nodeKey}`);
-            if (!canvas || !nodeEl) return;
-            const containerRect = canvas.parentElement.getBoundingClientRect();
-            const nodeRect = nodeEl.getBoundingClientRect();
-            
-            const targetX = (nodeRect.left + nodeRect.width / 2) - containerRect.left;
-            const targetY = (nodeRect.top + nodeRect.height / 2) - containerRect.top;
-
-            for (let i = 0; i < 35; i++) {
-                particles.push(new MatrixParticle(targetX, targetY, color));
-            }
-        }
-
-        function pipelineRenderLoop() {
+        function sparkRenderLoop() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles = particles.filter(p => p.alpha > 0);
             particles.forEach(p => {
                 p.update();
                 p.draw();
             });
-            requestAnimationFrame(pipelineRenderLoop);
+            requestAnimationFrame(sparkRenderLoop);
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            const bot = new PortfolioChatbot({
-                feedId: 'chat-feed',
-                inputId: 'chat-input',
-                submitBtnId: 'chat-submit',
-                chipContainerId: 'chip-container'
-            });
-            bot.init();
-            
-            canvas = document.getElementById('pipeline-canvas');
+            canvas = document.getElementById('track-spark-canvas');
             ctx = canvas.getContext('2d');
             syncCanvasBounds();
             window.addEventListener('resize', syncCanvasBounds);
-            requestAnimationFrame(pipelineRenderLoop);
+            requestAnimationFrame(sparkRenderLoop);
 
-            initSynchronizedObserver();
+            initCareerJourneyEngine();
         });
 
-        function initSynchronizedObserver() {
-            const progressBar = document.getElementById('pipeline-progress-line');
-            
+        function initCareerJourneyEngine() {
+            const robot = document.getElementById('journey-robot');
+            const robotGraphic = document.getElementById('robot-graphic');
+            const progressLine = document.getElementById('career-track-progress');
+            const trackContainer = document.getElementById('career-track-container');
+
+            // Milestone Text Elements
+            const markKpmg = document.getElementById('mark-kpmg');
+            const markWalmart = document.getElementById('mark-walmart');
+            const markBcbs = document.getElementById('mark-bcbs');
+            const markGoal = document.getElementById('mark-goal');
+
             window.addEventListener('scroll', () => {
-                const viewportActivationLine = window.innerHeight * 0.45;
-                let finalCalculatedPercentage = 0;
+                // Track journey from start of professional experience section to the end of academics
+                const startTimeline = document.getElementById('experience-timeline-anchor').offsetTop - 300;
+                const endTimeline = document.getElementById('academics-section-anchor').offsetTop + document.getElementById('academics-section-anchor').offsetHeight - window.innerHeight;
                 
-                pipelineStages.forEach((stage) => {
-                    const el = document.getElementById(stage.id);
-                    const nodeEl = document.getElementById(`node-${stage.nodeKey}`);
-                    if (!el || !nodeEl) return;
+                const totalJourneyDistance = endTimeline - startTimeline;
+                let currentProgressRatio = 0;
 
-                    const rect = el.getBoundingClientRect();
-                    
-                    // Activate structural node changes smoothly as the client reads down the stream layout
-                    if (rect.top <= viewportActivationLine) {
-                        if (!nodeStates[stage.nodeKey]) {
-                            nodeStates[stage.nodeKey] = true;
-                            executeParticleBurst(stage.nodeKey, stage.color);
-                        }
-                        nodeEl.classList.add('active', 'pipeline-glow', 'opacity-100', 'scale-105');
-                        finalCalculatedPercentage = stage.basePct;
-                        
-                        if (stage.id === 'content-skills') {
-                            el.classList.add('ring-2', 'ring-emerald-500/20', 'bg-zinc-900/60');
-                        }
-                    } else {
-                        nodeStates[stage.nodeKey] = false;
-                        nodeEl.classList.remove('active', 'pipeline-glow', 'opacity-100', 'scale-105');
-                        if (stage.id === 'content-skills') {
-                            el.classList.remove('ring-2', 'ring-emerald-500/20', 'bg-zinc-900/60');
-                        }
-                    }
-                });
+                if (window.scrollY > startTimeline) {
+                    currentProgressRatio = (window.scrollY - startTimeline) / totalJourneyDistance;
+                }
+                if (window.scrollY >= endTimeline) currentProgressRatio = 1;
+                if (currentProgressRatio < 0) currentProgressRatio = 0;
 
-                // Pin filling progress value directly to max limit if screen layout clamps into footer bottom
-                if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 12) {
-                    finalCalculatedPercentage = 100;
+                // Move robot across horizontally safely within padded container track boundary limits
+                const leftPadding = 48; // px-12 flanking offsets
+                const totalTrackWidth = trackContainer.offsetWidth - (leftPadding * 2);
+                const targetedRobotX = leftPadding + (currentProgressRatio * totalTrackWidth);
+
+                robot.style.left = `${targetedRobotX}px`;
+                progressLine.style.width = `${currentProgressRatio * 100}%`;
+
+                // Highlight milestone anchors contextually as robot crosses paths
+                markKpmg.style.color = currentProgressRatio >= 0.05 ? '#a855f7' : '#52525b';
+                markWalmart.style.color = currentProgressRatio >= 0.45 ? '#6366f1' : '#52525b';
+                markBcbs.style.color = currentProgressRatio >= 0.80 ? '#22d3ee' : '#52525b';
+                
+                if (currentProgressRatio >= 0.98) {
+                    markGoal.classList.remove('text-zinc-700');
+                    markGoal.classList.add('text-emerald-400', 'font-bold');
+                } else {
+                    markGoal.classList.remove('text-emerald-400', 'font-bold');
+                    markGoal.classList.add('text-zinc-700');
                 }
 
-                progressBar.style.width = `${finalCalculatedPercentage}%`;
+                // Fire micro thruster sparks if active scrolling delta occurs
+                if (Math.abs(window.scrollY - lastScrollY) > 1.5 && currentProgressRatio > 0 && currentProgressRatio < 1) {
+                    robotGraphic.classList.add('robot-active-running');
+                    
+                    const containerRect = trackContainer.getBoundingClientRect();
+                    const robotRect = robot.getBoundingClientRect();
+                    
+                    const emitX = (robotRect.left - containerRect.left) + 2;
+                    const emitY = (robotRect.top - containerRect.top) + 22; // floor line alignment
+
+                    for (let i = 0; i < 2; i++) {
+                        particles.push(new KineticSpark(emitX, emitY));
+                    }
+
+                    clearTimeout(runningTimeout);
+                    runningTimeout = setTimeout(() => {
+                        robotGraphic.classList.remove('robot-active-running');
+                    }, 100);
+                }
+
+                lastScrollY = window.scrollY;
             });
         }
 
