@@ -20,6 +20,14 @@
         ::-webkit-scrollbar-track { background: #09090b; }
         ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
+
+        /* Custom Hardware Accelerated Utilities for AI Pipeline */
+        .pipeline-glow {
+            box-shadow: 0 0 25px -5px var(--glow-color);
+        }
+        .pipeline-line-progress {
+            transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
     </style>
 </head>
 <body class="bg-zinc-950 text-zinc-300 font-sans antialiased selection:bg-indigo-500/30 selection:text-indigo-200">
@@ -57,6 +65,55 @@
             </a>
         </div>
     </header>
+
+    <!-- INTERACTIVE AI SCROLL PIPELINE COMPONENT WITH EMBEDDED CANVAS -->
+    <div class="bg-zinc-950 border-b border-zinc-900/60 sticky top-0 z-50 backdrop-blur-md py-6 hidden md:block select-none">
+        <div id="pipeline-container" class="max-w-5xl mx-auto px-6 relative">
+            
+            <!-- Matrix Particle Layer Canvas -->
+            <canvas id="pipeline-canvas" class="absolute inset-0 pointer-events-none z-10"></canvas>
+            
+            <div class="flex items-center justify-between relative z-20">
+                <!-- Background Line Track -->
+                <div class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-[2px] bg-zinc-900 z-0"></div>
+                <!-- Dynamic Active Filling Line -->
+                <div id="pipeline-progress-line" class="absolute left-0 top-1/2 -translate-y-1/2 w-0 h-[2px] bg-gradient-to-r from-cyan-500 via-indigo-500 to-emerald-500 z-0 pipeline-line-progress"></div>
+
+                <!-- Node 1: Embedding Pipeline -->
+                <div id="node-embedding" class="relative z-10 flex flex-col items-center group transition-all duration-300 opacity-40 scale-95">
+                    <div class="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center font-mono text-xs font-bold text-cyan-400 group-[.active]:border-cyan-500 group-[.active]:bg-cyan-950/40 transition-all duration-300" style="--glow-color: rgba(34, 211, 238, 0.4);">
+                        01
+                    </div>
+                    <span class="absolute -bottom-6 text-[10px] font-mono tracking-wider whitespace-nowrap uppercase text-zinc-500 group-[.active]:text-cyan-400 transition-colors">Embedding Pipeline</span>
+                </div>
+
+                <!-- Node 2: Vector Pipeline -->
+                <div id="node-vector" class="relative z-10 flex flex-col items-center group transition-all duration-300 opacity-40 scale-95">
+                    <div class="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center font-mono text-xs font-bold text-indigo-400 group-[.active]:border-indigo-500 group-[.active]:bg-indigo-950/40 transition-all duration-300" style="--glow-color: rgba(99, 102, 241, 0.4);">
+                        02
+                    </div>
+                    <span class="absolute -bottom-6 text-[10px] font-mono tracking-wider whitespace-nowrap uppercase text-zinc-500 group-[.active]:text-indigo-400 transition-colors">Vector Pipeline</span>
+                </div>
+
+                <!-- Node 3: Sai Dari Intelligence Layer -->
+                <div id="node-saidari" class="relative z-10 flex flex-col items-center group transition-all duration-300 opacity-40 scale-95">
+                    <div class="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center font-mono text-xs font-bold text-purple-400 group-[.active]:border-purple-500 group-[.active]:bg-purple-950/40 transition-all duration-300" style="--glow-color: rgba(168, 85, 247, 0.4);">
+                        03
+                    </div>
+                    <span class="absolute -bottom-6 text-[10px] font-mono tracking-wider whitespace-nowrap uppercase text-zinc-500 group-[.active]:text-purple-300 transition-colors">Sai Dari Core</span>
+                </div>
+
+                <!-- Node 4: Synthesized Skills Synthesis -->
+                <div id="node-skills" class="relative z-10 flex flex-col items-center group transition-all duration-300 opacity-40 scale-95">
+                    <div class="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center font-mono text-xs font-bold text-emerald-400 group-[.active]:border-emerald-500 group-[.active]:bg-emerald-950/40 transition-all duration-300" style="--glow-color: rgba(16, 185, 129, 0.4);">
+                        04
+                    </div>
+                    <span class="absolute -bottom-6 text-[10px] font-mono tracking-wider whitespace-nowrap uppercase text-zinc-500 group-[.active]:text-emerald-400 transition-colors">Skills Engine</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
     <!-- Main Workspace Layout -->
     <main class="max-w-6xl mx-auto px-6 py-20 grid grid-cols-1 lg:grid-cols-3 gap-16 items-start">
@@ -216,10 +273,10 @@
         </div>
 
         <!-- Right Side: Sticky Widgets -->
-        <div class="space-y-12 lg:sticky lg:top-8">
+        <div class="space-y-12 lg:sticky lg:top-28">
             
             <!-- Skills Breakdown Block -->
-            <div class="bg-zinc-900/30 border border-zinc-900 rounded-2xl p-6 backdrop-blur-sm space-y-6">
+            <div id="skills-target-widget" class="bg-zinc-900/30 border border-zinc-900 rounded-2xl p-6 backdrop-blur-sm space-y-6 transition-all duration-500">
                 <h3 class="text-lg font-bold text-white border-b border-zinc-800 pb-2">Core Tech Stack</h3>
                 <div class="space-y-4">
                     <div>
@@ -285,9 +342,69 @@
         <p>&copy; 2026 Sai Dari. Built with GitHub Pages & Tailwind CSS.</p>
     </footer>
 
-    <!-- Typewriter Engine & Class Initialization -->
+    <!-- Typewriter Engine, Particle Burst, & Scroll Pipeline Runtime Controller -->
     <script type="module">
         import PortfolioChatbot from './chatbot.js';
+
+        // Particle Tracking Cache State
+        let particles = [];
+        let canvas, ctx;
+        const activeNodeStates = { embedding: false, vector: false, saidari: false, skills: false };
+
+        class MatrixParticle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 3 + 1.5;
+                this.vx = (Math.random() - 0.5) * 7;
+                this.vy = (Math.random() - 0.5) * 7;
+                this.color = color;
+                this.alpha = 1.0;
+                this.decay = Math.random() * 0.02 + 0.015;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.alpha -= this.decay;
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = this.color;
+                // Digital square particles for a clean cyber matrix look
+                ctx.fillRect(this.x, this.y, this.size, this.size);
+                ctx.restore();
+            }
+        }
+
+        function syncCanvasBounds() {
+            if (!canvas) return;
+            canvas.width = canvas.parentElement.offsetWidth;
+            canvas.height = canvas.parentElement.offsetHeight;
+        }
+
+        function executeParticleBurst(element, color) {
+            if (!canvas || !element) return;
+            const containerRect = canvas.parentElement.getBoundingClientRect();
+            const nodeRect = element.getBoundingClientRect();
+            
+            const targetX = (nodeRect.left + nodeRect.width / 2) - containerRect.left;
+            const targetY = (nodeRect.top + nodeRect.height / 2) - containerRect.top;
+
+            for (let i = 0; i < 35; i++) {
+                particles.push(new MatrixParticle(targetX, targetY, color));
+            }
+        }
+
+        function pipelineRenderLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles = particles.filter(p => p.alpha > 0);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(pipelineRenderLoop);
+        }
 
         document.addEventListener("DOMContentLoaded", () => {
             const bot = new PortfolioChatbot({
@@ -297,8 +414,89 @@
                 chipContainerId: 'chip-container'
             });
             bot.init();
+            
+            // Core canvas wiring
+            canvas = document.getElementById('pipeline-canvas');
+            ctx = canvas.getContext('2d');
+            syncCanvasBounds();
+            window.addEventListener('resize', syncCanvasBounds);
+            requestAnimationFrame(pipelineRenderLoop);
+
+            initScrollPipeline();
         });
 
+        function initScrollPipeline() {
+            const progressBar = document.getElementById('pipeline-progress-line');
+            const nodes = {
+                embedding: document.getElementById('node-embedding'),
+                vector: document.getElementById('node-vector'),
+                saidari: document.getElementById('node-saidari'),
+                skills: document.getElementById('node-skills')
+            };
+            const skillsWidget = document.getElementById('skills-target-widget');
+
+            window.addEventListener('scroll', () => {
+                const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+                if (totalHeight <= 0) return;
+
+                const scrollRatio = window.scrollY / totalHeight;
+                const percentage = Math.min(Math.max(scrollRatio * 100, 0), 100);
+
+                progressBar.style.width = `${percentage}%`;
+
+                // Stage 01: Embedding (Cyan Burst)
+                if (percentage >= 5) {
+                    if (!activeNodeStates.embedding) {
+                        activeNodeStates.embedding = true;
+                        executeParticleBurst(nodes.embedding, '#22d3ee');
+                    }
+                    nodes.embedding.classList.add('active', 'pipeline-glow', 'opacity-100', 'scale-105');
+                } else {
+                    activeNodeStates.embedding = false;
+                    nodes.embedding.classList.remove('active', 'pipeline-glow', 'opacity-100', 'scale-105');
+                }
+
+                // Stage 02: Vector Indexing (Indigo Burst)
+                if (percentage >= 30) {
+                    if (!activeNodeStates.vector) {
+                        activeNodeStates.vector = true;
+                        executeParticleBurst(nodes.vector, '#6366f1');
+                    }
+                    nodes.vector.classList.add('active', 'pipeline-glow', 'opacity-100', 'scale-105');
+                } else {
+                    activeNodeStates.vector = false;
+                    nodes.vector.classList.remove('active', 'pipeline-glow', 'opacity-100', 'scale-105');
+                }
+
+                // Stage 03: Sai Dari Execution Core (Purple Burst)
+                if (percentage >= 60) {
+                    if (!activeNodeStates.saidari) {
+                        activeNodeStates.saidari = true;
+                        executeParticleBurst(nodes.saidari, '#a855f7');
+                    }
+                    nodes.saidari.classList.add('active', 'pipeline-glow', 'opacity-100', 'scale-105');
+                } else {
+                    activeNodeStates.saidari = false;
+                    nodes.saidari.classList.remove('active', 'pipeline-glow', 'opacity-100', 'scale-105');
+                }
+
+                // Stage 04: Synthesized Skills Matrix (Emerald Burst)
+                if (percentage >= 85) {
+                    if (!activeNodeStates.skills) {
+                        activeNodeStates.skills = true;
+                        executeParticleBurst(nodes.skills, '#10b981');
+                    }
+                    nodes.skills.classList.add('active', 'pipeline-glow', 'opacity-100', 'scale-105');
+                    skillsWidget.classList.add('ring-2', 'ring-emerald-500/30', 'bg-zinc-900/60');
+                } else {
+                    activeNodeStates.skills = false;
+                    nodes.skills.classList.remove('active', 'pipeline-glow', 'opacity-100', 'scale-105');
+                    skillsWidget.classList.remove('ring-2', 'ring-emerald-500/30', 'bg-zinc-900/60');
+                }
+            });
+        }
+
+        // Title Typewriter Component
         const roles = [
             "Agentic Multi-Agent Frameworks.",
             "Enterprise RAG Architectures.",
@@ -318,9 +516,7 @@
             setTimeout(playTypewriter, speed);
         }
 
-        document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(playTypewriter, 400);
-        });
+        setTimeout(playTypewriter, 400);
     </script>
 </body>
 </html>
