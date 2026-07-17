@@ -23,7 +23,7 @@
 
         /* Hardware Accelerated Robot Leg-Jog Animation */
         @keyframes robot-run {
-            0%, 100% { transform: translateY(-50%) translateY(0px) rotate(0deg); }
+            0%, 100’% { transform: translateY(-50%) translateY(0px) rotate(0deg); }
             25% { transform: translateY(-50%) translateY(-2px) rotate(4deg); }
             50% { transform: translateY(-50%) translateY(0px) rotate(0deg); }
             75% { transform: translateY(-50%) translateY(-2px) rotate(-4deg); }
@@ -34,7 +34,7 @@
         }
 
         .track-progress-line {
-            transition: width 0.1s ease-out;
+            transition: width 0.05s ease-out, left 0.05s ease-out;
         }
     </style>
 </head>
@@ -74,7 +74,7 @@
         </div>
     </header>
 
-    <!-- PREMIUM CAREER JOURNEY STICKY TRACKER -->
+    <!-- PREMIUM CAREER JOURNEY STICKY TRACKER (DYNAMIC INTERPOLATION ENGINE) -->
     <div class="bg-zinc-950/90 border-b border-zinc-900/80 sticky top-0 z-50 backdrop-blur-md py-5 hidden md:block select-none overflow-hidden">
         <div id="career-track-container" class="max-w-4xl mx-auto px-12 relative h-10">
             
@@ -82,10 +82,10 @@
             <canvas id="track-spark-canvas" class="absolute inset-0 pointer-events-none z-10"></canvas>
             
             <!-- Structural Track Line Wires -->
-            <div class="absolute left-12 right-12 top-1/2 -translate-y-1/2 h-[1px] bg-zinc-900 z-0"></div>
-            <div id="career-track-progress" class="absolute left-12 top-1/2 -translate-y-1/2 w-0 h-[1px] bg-gradient-to-r from-purple-500 via-indigo-500 to-emerald-500 z-0 track-progress-line"></div>
+            <div class="absolute left-12 right-12 top-1/2 -translate-y-1/2 h-[1px] bg-zinc-900/60 z-0"></div>
+            <div id="career-track-progress" class="absolute top-1/2 -translate-y-1/2 h-[1px] bg-gradient-to-r from-purple-500 via-indigo-500 to-emerald-500 z-0 track-progress-line" style="left: 48px; width: 0px;"></div>
 
-            <!-- Visual Career Milestone Anchors aligned with user requested journey -->
+            <!-- Visual Career Milestone Anchors distributed smoothly -->
             <div class="absolute left-12 right-12 top-1/2 -translate-y-1/2 flex justify-between px-1 pointer-events-none z-20 font-mono text-[10px] tracking-wider text-zinc-600 uppercase">
                 <span id="mark-journey" class="bg-zinc-950 px-2 transition-colors duration-300">Journey</span>
                 <span id="mark-experience" class="bg-zinc-950 px-2 transition-colors duration-300">Experience</span>
@@ -95,7 +95,7 @@
             </div>
 
             <!-- RUNNING MINI ROBOT AGENT -->
-            <div id="journey-robot" class="absolute top-1/2 -translate-y-1/2 left-12 -ml-4 z-30 will-change-transform pointer-events-none transition-all duration-75 ease-out">
+            <div id="journey-robot" class="absolute top-1/2 -translate-y-1/2 left-12 z-30 will-change-transform pointer-events-none transition-all duration-75 ease-out">
                 <div id="robot-graphic" class="text-indigo-400">
                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="drop-shadow-[0_0_8px_rgba(99,102,241,0.6)]">
                         <path d="M12 2v2M12 2a0.5 0.5 0 1 0 0 1" fill="currentColor"/>
@@ -114,11 +114,11 @@
     <!-- Main Workspace Layout -->
     <main class="max-w-6xl mx-auto px-6 py-20 grid grid-cols-1 lg:grid-cols-3 gap-16 items-start">
         
-        <!-- Left Side: Core Engineering Narrative -->
+        <!-- Left Side: Core Engineering Narrative Layout -->
         <div class="lg:col-span-2 space-y-24">
             
             <!-- 1. EXECUTIVE ROADMAP INTRO -->
-            <section id="section-journey" class="space-y-6 scroll-mt-32">
+            <section id="section-journey" class="space-y-6 scroll-mt-36">
                 <h2 class="text-2xl font-bold text-white border-b border-zinc-900 pb-3 tracking-tight">
                     The Engineering Journey & Impact
                 </h2>
@@ -132,7 +132,7 @@
 
                     <!-- KPMG Era Narrative Summary -->
                     <div class="border-l-2 border-zinc-900/60 pl-4 my-4 space-y-1">
-                        <span class="text-xs font-mono uppercase tracking-wider text-zinc-500 block">The Foundation — KPMG Machine Learning & Python Infrastructure</span>
+                        <span class="text-xs font-mono uppercase tracking-wider text-zinc-500 block">The Foundation — KPMG ML Infrastructure & Systems Development</span>
                         <p>
                             I built my technical foundation handling cross-functional data landscapes at <span class="text-indigo-400 font-medium">KPMG</span>. Transitioning from automated NLP chatbot workflows to engineering distributed PySpark processing pipelines on AWS EMR, I managed the ingestion and optimization of over <strong class="text-zinc-200 font-medium">2 TB of monthly claims data</strong> while delivering production-grade Flask integrations.
                         </p>
@@ -157,7 +157,7 @@
             </section>
 
             <!-- 2. PROFESSIONAL EXPERIENCE SECTION (WHAT + WHY + IMPACT) -->
-            <section id="section-experience" class="space-y-10 scroll-mt-32">
+            <section id="section-experience" class="space-y-10 scroll-mt-36">
                 <h2 class="text-2xl font-bold text-white border-b border-zinc-900 pb-3 tracking-tight">
                     Professional Experience Metrics
                 </h2>
@@ -218,24 +218,16 @@
                         <div class="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-zinc-700"></div>
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                             <h3 class="text-lg font-bold text-zinc-100">Machine Learning Engineer</h3>
-                            <span class="text-xs text-zinc-500 font-mono">September 2019 - July 2021</span>
+                            <span class="text-xs text-zinc-500 font-mono">September 2019 – July 2021</span>
                         </div>
                         <p class="text-sm font-medium text-indigo-400/90 font-mono">KPMG | Bengaluru, India</p>
                         
-                        <div class="grid grid-cols-1 gap-3 pt-2 text-sm">
-                            <div class="bg-zinc-900/20 border border-zinc-900/60 p-3 rounded-xl">
-                                <span class="text-xs font-mono font-bold text-zinc-500 uppercase tracking-wider block mb-1">What & Why:</span>
-                                <p class="text-zinc-300 font-light">Deployed RESTful APIs via Flask and authored TypeScript modules to implement 30+ strict validation rules, seamlessly integrating core healthcare applications with third-party eligibility and claims ecosystems.</p>
-                            </div>
-                            <div class="bg-zinc-900/20 border border-zinc-900/60 p-3 rounded-xl">
-                                <span class="text-xs font-mono font-bold text-zinc-500 uppercase tracking-wider block mb-1">Architectural Scope:</span>
-                                <p class="text-zinc-300 font-light">Constructed anomaly detection architectures utilizing PyTorch, TensorFlow, and XGBoost while transforming over 2 TB+ of monthly claims data using PySpark on AWS EMR.</p>
-                            </div>
-                            <div class="bg-zinc-900/20 border border-zinc-900/60 p-3 rounded-xl border-l-2 border-l-purple-500/50">
-                                <span class="text-xs font-mono font-bold text-purple-400 uppercase tracking-wider block mb-1">Impact:</span>
-                                <p class="text-zinc-200 font-medium font-sans">Supported over 12K+ monthly transaction exchanges and flagged 1,800+ high-risk fraudulent transactions per quarter for intensive review.</p>
-                            </div>
-                        </div>
+                        <ul class="space-y-2 text-sm text-zinc-400 font-light pl-4 list-disc">
+                            <li><strong class="text-zinc-200">RESTful Orchestration:</strong> Deployed RESTful APIs using Flask to integrate core healthcare applications with third-party platforms, supporting <strong class="text-indigo-400 font-medium">12K+ monthly data exchanges</strong> across claims, eligibility, and patient information workflows.</li>
+                            <li><strong class="text-zinc-200">Algorithmic Risk Models:</strong> Constructed machine learning models using PyTorch, TensorFlow, and XGBoost for anomaly detection and risk assessment, flagging <strong class="text-emerald-400 font-medium">1,800+ high-risk healthcare transactions per quarter</strong> for fraud review.</li>
+                            <li><strong class="text-zinc-200">Strict Code Quality:</strong> Authored TypeScript modules for backend integrations and API orchestration, enforcing 30+ validation rules across healthcare data payloads and strengthening consistency across interconnected systems.</li>
+                            <li><strong class="text-zinc-200">Big Data Pipelines:</strong> Transformed <strong class="text-zinc-200 font-medium">2 TB+ of claims and clinical datasets per month</strong> using PySpark on AWS EMR, preparing analytics-ready data for enterprise reporting and integration workflows.</li>
+                        </ul>
                     </div>
 
                     <!-- Milestone 4: KPMG Python Developer Intern -->
@@ -243,30 +235,20 @@
                         <div class="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-zinc-700"></div>
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                             <h3 class="text-lg font-bold text-zinc-100">Python Developer Intern</h3>
-                            <span class="text-xs text-zinc-500 font-mono">February 2019 - August 2019</span>
+                            <span class="text-xs text-zinc-500 font-mono">February 2019 – August 2019</span>
                         </div>
                         <p class="text-sm font-medium text-indigo-400/90 font-mono">KPMG | Bengaluru, India</p>
                         
-                        <div class="grid grid-cols-1 gap-3 pt-2 text-sm">
-                            <div class="bg-zinc-900/20 border border-zinc-900/60 p-3 rounded-xl">
-                                <span class="text-xs font-mono font-bold text-zinc-500 uppercase tracking-wider block mb-1">What:</span>
-                                <p class="text-zinc-300 font-light">Programmed an enterprise-level AI chatbot system leveraging Rasa, TensorFlow, and Python syntax blocks.</p>
-                            </div>
-                            <div class="bg-zinc-900/20 border border-zinc-900/60 p-3 rounded-xl">
-                                <span class="text-xs font-mono font-bold text-zinc-500 uppercase tracking-wider block mb-1">Why:</span>
-                                <p class="text-zinc-300 font-light">To automate 5 recurring healthcare and clinical data integration workflows across localized internal engineering staging environments.</p>
-                            </div>
-                            <div class="bg-zinc-900/20 border border-zinc-900/60 p-3 rounded-xl border-l-2 border-l-blue-500/50">
-                                <span class="text-xs font-mono font-bold text-blue-400 uppercase tracking-wider block mb-1">Impact:</span>
-                                <p class="text-zinc-200 font-medium font-sans">Configured scalable continuous NLP training loops over MongoDB and AWS resources, analyzing 5K+ records per cycle.</p>
-                            </div>
-                        </div>
+                        <ul class="space-y-2 text-sm text-zinc-400 font-light pl-4 list-disc">
+                            <li><strong class="text-zinc-200">NLP Automation:</strong> Programmed an enterprise AI chatbot using Rasa, TensorFlow, and Python to automate 5 recurring healthcare and clinical data workflows across internal development environments.</li>
+                            <li><strong class="text-zinc-200">Data Engineering Loops:</strong> Configured weekly NLP model retraining workflows using MongoDB and AWS services, preparing <strong class="text-indigo-400 font-medium">5K+ labeled text records per training cycle</strong> for model evaluation and classification updates.</li>
+                        </ul>
                     </div>
                 </div>
             </section>
 
             <!-- 3. PROJECTS AND OPEN SOURCE -->
-            <section id="section-projects" class="space-y-8 scroll-mt-32">
+            <section id="section-projects" class="space-y-8 scroll-mt-36">
                 <h2 class="text-2xl font-bold text-white border-b border-zinc-900 pb-3 tracking-tight flex items-center gap-3">
                     Projects and Open Source
                 </h2>
@@ -314,7 +296,7 @@
             </section>
 
             <!-- 4. ACHIEVEMENTS -->
-            <section id="section-achievements" class="space-y-6 scroll-mt-32">
+            <section id="section-achievements" class="space-y-6 scroll-mt-36">
                 <h2 class="text-2xl font-bold text-white border-b border-zinc-900 pb-3 tracking-tight">
                     Achievements
                 </h2>
@@ -337,7 +319,7 @@
             </section>
 
             <!-- 5. ACADEMICS -->
-            <section id="section-academics" class="grid grid-cols-1 md:grid-cols-2 gap-10 scroll-mt-32">
+            <section id="section-academics" class="grid grid-cols-1 md:grid-cols-2 gap-10 scroll-mt-36">
                 <div>
                     <h2 class="text-2xl font-bold text-white border-b border-zinc-900 pb-3 tracking-tight mb-4">Academics</h2>
                     <div class="bg-zinc-900/20 border border-zinc-900/60 p-5 rounded-2xl space-y-2">
@@ -439,7 +421,7 @@
                 this.x = x;
                 this.y = y;
                 this.size = Math.random() * 2 + 1;
-                this.vx = -1.2 - Math.random() * 2.5; // Emits backward relative to motion
+                this.vx = -1.2 - Math.random() * 2.5; 
                 this.vy = (Math.random() - 0.5) * 2.5;
                 this.alpha = 1.0;
                 this.decay = Math.random() * 0.05 + 0.03;
@@ -490,7 +472,6 @@
             const progressLine = document.getElementById('career-track-progress');
             const trackContainer = document.getElementById('career-track-container');
 
-            // Sequential Milestone Text Elements mapping user layout sequence
             const markJourney = document.getElementById('mark-journey');
             const markExperience = document.getElementById('mark-experience');
             const markProjects = document.getElementById('mark-projects');
@@ -506,66 +487,74 @@
             ];
 
             window.addEventListener('scroll', () => {
-                const firstSection = document.getElementById(sections[0].id);
-                const lastSection = document.getElementById(sections[sections.length - 1].id);
-
-                if (!firstSection || !lastSection) return;
-
-                // Sync bounds calculation: starts when the journey entry hits view space, ends when academics exits
-                const startTimeline = firstSection.offsetTop - 200;
-                const endTimeline = lastSection.offsetTop + lastSection.offsetHeight - window.innerHeight;
+                // Focus crosshair calculated at roughly 35% of page viewpoint to keep tracking intuitive
+                const scrollCrosshair = window.scrollY + window.innerHeight * 0.35;
                 
-                const totalJourneyDistance = endTimeline - startTimeline;
-                let currentProgressRatio = 0;
+                let activeIdx = 0;
+                let sectionProgress = 0;
 
-                if (window.scrollY > startTimeline) {
-                    currentProgressRatio = (window.scrollY - startTimeline) / totalJourneyDistance;
+                // Segmented section detection to account for layout height variances 
+                for (let i = 0; i < sections.length; i++) {
+                    const currentSec = document.getElementById(sections[i].id);
+                    if (!currentSec) continue;
+
+                    const top = currentSec.offsetTop;
+                    const height = currentSec.offsetHeight;
+
+                    if (scrollCrosshair >= top && scrollCrosshair < top + height) {
+                        activeIdx = i;
+                        sectionProgress = (scrollCrosshair - top) / height;
+                        break;
+                    } else if (scrollCrosshair >= top + height) {
+                        activeIdx = i;
+                        sectionProgress = 1;
+                    }
                 }
-                if (window.scrollY >= endTimeline) currentProgressRatio = 1;
-                if (currentProgressRatio < 0) currentProgressRatio = 0;
 
-                // Position calculation matching horizontal bounds accurately
-                const leftPadding = 48; // px-12 flanking offsets
-                const totalTrackWidth = trackContainer.offsetWidth - (leftPadding * 2);
-                const targetedRobotX = leftPadding + (currentProgressRatio * totalTrackWidth);
+                // Map marker coordinates layout dynamically via offsets
+                const markerPositions = sections.map(sec => {
+                    return sec.mark.offsetLeft + (sec.mark.offsetWidth / 2);
+                });
 
-                robot.style.left = `${targetedRobotX}px`;
-                progressLine.style.width = `${currentProgressRatio * 100}%`;
+                let computedRobotX = markerPositions[0];
+                if (activeIdx < sections.length - 1) {
+                    const startX = markerPositions[activeIdx];
+                    const endX = markerPositions[activeIdx + 1];
+                    computedRobotX = startX + sectionProgress * (endX - startX);
+                } else {
+                    computedRobotX = markerPositions[sections.length - 1];
+                }
 
-                // Calculate highlighted text based on explicit viewport scroll metrics
+                // Translate position accurately subtracting half of robot's structural template dimensions (16px)
+                robot.style.left = `${computedRobotX - 16}px`;
+
+                // Sync background line tracks perfectly matching robot position limits
+                const trackStart = markerPositions[0];
+                const trackEnd = markerPositions[markerPositions.length - 1];
+                progressLine.style.left = `${trackStart}px`;
+                progressLine.style.width = `${computedRobotX - trackStart}px`;
+
+                // High-fidelity active text coloring updates matching calculated milestones
                 sections.forEach((sec, idx) => {
-                    const el = document.getElementById(sec.id);
-                    if (!el) return;
-                    
-                    const top = el.offsetTop - 250;
-                    const bottom = top + el.offsetHeight;
-                    const isCurrent = window.scrollY >= top && window.scrollY < bottom;
-                    const isPast = window.scrollY >= bottom;
-
-                    if (idx === sections.length - 1 && currentProgressRatio >= 0.96) {
-                        sec.mark.style.color = '#34d399'; // Emerald completion hue
-                        sec.mark.classList.add('font-bold');
-                    } else if (isCurrent) {
-                        sec.mark.style.color = '#6366f1'; // Active Section focus
+                    if (idx === activeIdx) {
+                        sec.mark.style.color = (idx === sections.length - 1) ? '#34d399' : '#6366f1';
                         sec.mark.classList.add('font-medium');
-                    } else if (isPast) {
-                        sec.mark.style.color = '#a855f7'; // Completed Section focus
+                    } else if (idx < activeIdx) {
+                        sec.mark.style.color = '#a855f7';
                         sec.mark.classList.remove('font-medium');
                     } else {
-                        sec.mark.style.color = '#52525b'; // Standard inactive state
-                        sec.mark.classList.remove('font-medium', 'font-bold');
+                        sec.mark.style.color = '#52525b';
+                        sec.mark.classList.remove('font-medium');
                     }
                 });
 
-                // Fire micro thruster sparks if active scrolling delta occurs
-                if (Math.abs(window.scrollY - lastScrollY) > 1.2 && currentProgressRatio > 0 && currentProgressRatio < 1) {
+                // Spark triggers upon motion detection
+                if (Math.abs(window.scrollY - lastScrollY) > 1.2) {
                     robotGraphic.classList.add('robot-active-running');
-                    
                     const containerRect = trackContainer.getBoundingClientRect();
                     const robotRect = robot.getBoundingClientRect();
-                    
-                    const emitX = (robotRect.left - containerRect.left) + 2;
-                    const emitY = (robotRect.top - containerRect.top) + 22; // floor line alignment
+                    const emitX = (robotRect.left - containerRect.left) + 16;
+                    const emitY = (robotRect.top - containerRect.top) + 22;
 
                     for (let i = 0; i < 2; i++) {
                         particles.push(new KineticSpark(emitX, emitY));
@@ -576,7 +565,6 @@
                         robotGraphic.classList.remove('robot-active-running');
                     }, 100);
                 }
-
                 lastScrollY = window.scrollY;
             });
         }
