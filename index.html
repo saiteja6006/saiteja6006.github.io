@@ -21,20 +21,12 @@
         ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
 
-        /* Robot Micro-Animations */
-        @keyframes robot-jog {
-            0%, 100% { transform: translateY(-50%) translateY(0px) rotate(0deg); }
-            25% { transform: translateY(-50%) translateY(-3px) rotate(3deg); }
-            50% { transform: translateY(-50%) translateY(0px) rotate(0deg); }
-            75% { transform: translateY(-50%) translateY(-3px) rotate(-3deg); }
+        /* Custom Hardware Accelerated Utilities for AI Pipeline */
+        .pipeline-glow {
+            box-shadow: 0 0 25px -5px var(--glow-color);
         }
-        
-        .robot-running {
-            animation: robot-jog 0.25s infinite linear;
-        }
-        
         .pipeline-line-progress {
-            transition: width 0.1s ease-out;
+            transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
     </style>
 </head>
@@ -74,38 +66,52 @@
         </div>
     </header>
 
-    <!-- STICKY ROBOT RUNNING TRACK CONTAINER -->
-    <div class="bg-zinc-950/90 border-b border-zinc-900/80 sticky top-0 z-50 backdrop-blur-md py-5 hidden md:block select-none overflow-hidden">
-        <div id="pipeline-container" class="max-w-5xl mx-auto px-12 relative h-10">
+    <!-- INTERACTIVE AI SCROLL PIPELINE COMPONENT WITH EMBEDDED CANVAS -->
+    <div class="bg-zinc-950 border-b border-zinc-900/60 sticky top-0 z-50 backdrop-blur-md py-6 hidden md:block select-none">
+        <div id="pipeline-container" class="max-w-5xl mx-auto px-6 relative">
             
-            <!-- Canvas for Robot Dust Sparks -->
+            <!-- Matrix Particle Layer Canvas -->
             <canvas id="pipeline-canvas" class="absolute inset-0 pointer-events-none z-10"></canvas>
             
-            <!-- The Running Track Wires -->
-            <div class="absolute left-12 right-12 top-1/2 -translate-y-1/2 h-[1px] bg-zinc-900 z-0"></div>
-            <div id="pipeline-progress-line" class="absolute left-12 top-1/2 -translate-y-1/2 w-0 h-[1px] bg-gradient-to-r from-indigo-500 via-purple-500 to-emerald-500 z-0 pipeline-line-progress"></div>
+            <div class="flex items-center justify-between relative z-20">
+                <!-- Background Line Track -->
+                <div class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-[2px] bg-zinc-900 z-0"></div>
+                <!-- Dynamic Active Filling Line -->
+                <div id="pipeline-progress-line" class="absolute left-0 top-1/2 -translate-y-1/2 w-0 h-[2px] bg-gradient-to-r from-cyan-500 via-indigo-500 to-emerald-500 z-0 pipeline-line-progress"></div>
 
-            <!-- RUNNING MINI ROBOT AGENT -->
-            <div id="scroll-robot" class="absolute top-1/2 -translate-y-1/2 left-12 -ml-5 z-20 will-change-transform pointer-events-none transition-all duration-75 ease-out">
-                <div id="robot-visual" class="text-indigo-400">
-                    <!-- Crisp custom SVG cyberbot -->
-                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="drop-shadow-[0_0_8px_rgba(99,102,241,0.5)]">
-                        <!-- Antenna -->
-                        <path d="M12 2v2M12 2a1 1 0 1 0 0 2 1 1 0 1 0 0-2" fill="currentColor"/>
-                        <!-- Head -->
-                        <rect x="5" y="5" width="14" height="8" rx="2" fill="#09090b"/>
-                        <!-- Eyes (Glowing Cyan matrix color) -->
-                        <path d="M9 9h.01M15 9h.01" stroke="#22d3ee" stroke-width="3"/>
-                        <!-- Neck -->
-                        <path d="M10 13h4"/>
-                        <!-- Chassis / Body -->
-                        <rect x="7" y="14" width="10" height="6" rx="1" fill="#09090b"/>
-                        <!-- Arm connections / detail -->
-                        <path d="M5 16h2M17 16h2"/>
-                    </svg>
+                <!-- Node 1: Embedding Pipeline -->
+                <div id="node-embedding" class="relative z-10 flex flex-col items-center group transition-all duration-300 opacity-40 scale-95">
+                    <div class="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center font-mono text-xs font-bold text-cyan-400 group-[.active]:border-cyan-500 group-[.active]:bg-cyan-950/40 transition-all duration-300" style="--glow-color: rgba(34, 211, 238, 0.4);">
+                        01
+                    </div>
+                    <span class="absolute -bottom-6 text-[10px] font-mono tracking-wider whitespace-nowrap uppercase text-zinc-500 group-[.active]:text-cyan-400 transition-colors">Embedding Pipeline</span>
+                </div>
+
+                <!-- Node 2: Vector Pipeline -->
+                <div id="node-vector" class="relative z-10 flex flex-col items-center group transition-all duration-300 opacity-40 scale-95">
+                    <div class="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center font-mono text-xs font-bold text-indigo-400 group-[.active]:border-indigo-500 group-[.active]:bg-indigo-950/40 transition-all duration-300" style="--glow-color: rgba(99, 102, 241, 0.4);">
+                        02
+                    </div>
+                    <span class="absolute -bottom-6 text-[10px] font-mono tracking-wider whitespace-nowrap uppercase text-zinc-500 group-[.active]:text-indigo-400 transition-colors">Vector Pipeline</span>
+                </div>
+
+                <!-- Node 3: Sai Dari Intelligence Layer -->
+                <div id="node-saidari" class="relative z-10 flex flex-col items-center group transition-all duration-300 opacity-40 scale-95">
+                    <div class="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center font-mono text-xs font-bold text-purple-400 group-[.active]:border-purple-500 group-[.active]:bg-purple-950/40 transition-all duration-300" style="--glow-color: rgba(168, 85, 247, 0.4);">
+                        03
+                    </div>
+                    <span class="absolute -bottom-6 text-[10px] font-mono tracking-wider whitespace-nowrap uppercase text-zinc-500 group-[.active]:text-purple-300 transition-colors">Sai Dari Core</span>
+                </div>
+
+                <!-- Node 4: Synthesized Skills Synthesis -->
+                <div id="node-skills" class="relative z-10 flex flex-col items-center group transition-all duration-300 opacity-40 scale-95">
+                    <div class="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center font-mono text-xs font-bold text-emerald-400 group-[.active]:border-emerald-500 group-[.active]:bg-emerald-950/40 transition-all duration-300" style="--glow-color: rgba(16, 185, 129, 0.4);">
+                        04
+                    </div>
+                    <span class="absolute -bottom-6 text-[10px] font-mono tracking-wider whitespace-nowrap uppercase text-zinc-500 group-[.active]:text-emerald-400 transition-colors">Skills Engine</span>
                 </div>
             </div>
-            
+
         </div>
     </div>
 
@@ -155,6 +161,37 @@
                             <li>Deployed an AI-powered developer CLI assistant automating 14 recurring engineering tasks, saving 9 debugging hours per sprint.</li>
                             <li>Architected RAG systems parsing 1,000+ technical docs, managing 8K-10K daily queries while dropping retrieval latency by 4 seconds.</li>
                             <li>Orchestrated multi-agent infrastructures using LangChain and AutoGen, coordinating 6 specialized agents via structured tool schemas.</li>
+                            <li>Built verification layers governing 25+ callable tools through automated verification and repair loops in production.</li>
+                            <li>Sustained conversations exceeding 30 turns through advanced session memory caching and semantic routing.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Milestone 3: KPMG (Full-Time) -->
+                    <div class="relative border-l border-zinc-800 pl-6 ml-2 space-y-3">
+                        <div class="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-zinc-700"></div>
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                            <h3 class="text-lg font-bold text-zinc-100">Machine Learning Engineer</h3>
+                            <span class="text-xs text-zinc-500 font-mono">September 2019 - July 2021</span>
+                        </div>
+                        <p class="text-sm font-medium text-indigo-400/90 font-mono">KPMG | Bengaluru, India</p>
+                        <ul class="space-y-2 text-sm text-zinc-400 font-light list-disc list-inside">
+                            <li>Deployed Flask RESTful APIs supporting 12K+ monthly insurance claim data exchanges across internal platforms.</li>
+                            <li>Constructed PyTorch/TensorFlow/XGBoost anomaly detection pipelines, flagging 1,800+ high-risk fraudulent transactions per quarter.</li>
+                            <li>Transformed 2 TB+ of claims datasets per month using PySpark distributed compute pipelines on AWS EMR clusters.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Milestone 4: KPMG (Internship) -->
+                    <div class="relative border-l border-zinc-800 pl-6 ml-2 space-y-3">
+                        <div class="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-zinc-700"></div>
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                            <h3 class="text-lg font-bold text-zinc-100">Python Developer Intern</h3>
+                            <span class="text-xs text-zinc-500 font-mono">February 2019 - August 2019</span>
+                        </div>
+                        <p class="text-sm font-medium text-indigo-400/90 font-mono">KPMG | Bengaluru, India</p>
+                        <ul class="space-y-2 text-sm text-zinc-400 font-light list-disc list-inside">
+                            <li>Programmed an enterprise AI chatbot using Rasa, TensorFlow, and Python to automate 5 recurring healthcare and clinical data workflows.</li>
+                            <li>Configured weekly NLP model retraining workflows using MongoDB and AWS services, preparing 5K+ labeled text records per training cycle.</li>
                         </ul>
                     </div>
                 </div>
@@ -164,33 +201,72 @@
             <section class="space-y-8">
                 <div class="border-b border-zinc-900 pb-3 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
                     <h2 class="text-2xl font-bold text-white tracking-tight">Open Source & Featured Projects</h2>
+                    <span class="text-xs font-mono text-zinc-500">Active Creator & Contributor</span>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Open Source Project 1 -->
                     <div class="group bg-zinc-900/20 p-6 rounded-2xl border border-zinc-900 hover:border-zinc-800 transition-all duration-300 flex flex-col justify-between">
                         <div>
-                            <h3 class="text-lg font-bold text-zinc-100 group-hover:text-white transition-colors">Healthcare Agentic Decision Suite</h3>
-                            <p class="text-xs font-mono text-zinc-500 mt-1">FastAPI, OpenAI, Qdrant, AutoGen</p>
-                            <p class="mt-3 text-sm text-zinc-400 font-light">Coordinated 4 specialized AI agents handling patient intake, compliance validation, and supervisor review loops.</p>
+                            <div class="flex items-center justify-between gap-2">
+                                <h3 class="text-lg font-bold text-zinc-100 group-hover:text-white transition-colors">Healthcare Agentic Decision Suite</h3>
+                                <span class="bg-indigo-500/10 border border-indigo-500/20 text-[10px] font-mono text-indigo-400 px-2 py-0.5 rounded-full">Core Creator</span>
+                            </div>
+                            <p class="text-xs font-mono text-zinc-500 mt-1">FastAPI, OpenAI, Qdrant, React, AutoGen</p>
+                            <p class="mt-3 text-sm text-zinc-400 font-light leading-relaxed">Coordinated 4 specialized AI agents handling patient intake, evidence collection, compliance validation, and supervisor review loops. Embedded 3 safety layers to limit hallucination fields.</p>
                         </div>
                         <a href="https://github.com/saiteja6006/Healthcare-Agentic-AI-decision-support-system" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-indigo-400 mt-5 block hover:underline">Inspect Architecture Source ↗</a>
                     </div>
 
+                    <!-- Open Source Project 2 -->
                     <div class="group bg-zinc-900/20 p-6 rounded-2xl border border-zinc-900 hover:border-zinc-800 transition-all duration-300 flex flex-col justify-between">
                         <div>
-                            <h3 class="text-lg font-bold text-zinc-100 group-hover:text-white transition-colors">AI Document Invoice Agent</h3>
-                            <p class="text-xs font-mono text-zinc-500 mt-1">Python, Next.js, Ollama, RAG</p>
-                            <p class="mt-3 text-sm text-zinc-400 font-light">Assembled extraction architecture parsing raw multi-format documentation via Tesseract OCR matched with deep semantic RAG vectors.</p>
+                            <div class="flex items-center justify-between gap-2">
+                                <h3 class="text-lg font-bold text-zinc-100 group-hover:text-white transition-colors">AI Document Invoice Agent</h3>
+                                <span class="bg-indigo-500/10 border border-indigo-500/20 text-[10px] font-mono text-indigo-400 px-2 py-0.5 rounded-full">Core Creator</span>
+                            </div>
+                            <p class="text-xs font-mono text-zinc-500 mt-1">Python, Next.js, Ollama, OCR, MongoDB, RAG</p>
+                            <p class="mt-3 text-sm text-zinc-400 font-light leading-relaxed">Assembled extraction architecture parsing raw multi-format documentation via Tesseract OCR matched with deep semantic RAG vectors over 8K+ invoice data fields.</p>
                         </div>
                         <a href="https://github.com/saiteja6006/AI-Invoice-System" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-indigo-400 mt-5 block hover:underline">Inspect Architecture Source ↗</a>
                     </div>
                 </div>
 
-                <div class="bg-zinc-900/30 border border-zinc-900 rounded-2xl p-5 space-y-2">
-                    <h4 class="text-sm font-bold text-zinc-200 font-mono">↳ Hugging Face LeRobot Contributions</h4>
-                    <div class="flex flex-col gap-1.5 text-xs font-mono">
-                        <a href="https://github.com/huggingface/lerobot/pull/4044" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 transition-colors">**Hugging Face LeRobot** — Upstream Performance PR #4044 ↗</a>
-                        <a href="https://github.com/huggingface/lerobot/issues/4059" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 transition-colors">**Hugging Face LeRobot** — Camera Pipeline Optimization #4059 ↗</a>
+                <!-- Strategic Upstream Verification Block -->
+                <div class="bg-zinc-900/30 border border-zinc-900 rounded-2xl p-5 space-y-4">
+                    <h4 class="text-sm font-bold text-zinc-200 font-mono flex items-center gap-2">
+                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span> Community & Upstream Contributions
+                    </h4>
+                    <p class="text-xs text-zinc-400 font-light leading-relaxed">
+                        Actively scaling foundational libraries for robotics control, physical embodiment frameworks, and computer vision utilities. Track verified development logs directly via GitHub infrastructure:
+                    </p>
+                    <div class="flex flex-col gap-2.5 pt-1 border-t border-zinc-900/60 mt-2">
+                        <a href="https://github.com/huggingface/lerobot/pull/4044" target="_blank" rel="noopener noreferrer" class="text-xs text-indigo-400 hover:text-indigo-300 font-mono flex items-center gap-1.5 transition-colors group">
+                            <span class="text-zinc-600 group-hover:text-indigo-400 transition-colors">↳</span> **Hugging Face LeRobot** — Upstream Performance PR #4044 <span class="text-[10px] text-zinc-500 ml-1">↗</span>
+                        </a>
+                        <a href="https://github.com/huggingface/lerobot/issues/4059" target="_blank" rel="noopener noreferrer" class="text-xs text-indigo-400 hover:text-indigo-300 font-mono flex items-center gap-1.5 transition-colors group">
+                            <span class="text-zinc-600 group-hover:text-indigo-400 transition-colors">↳</span> **Hugging Face LeRobot** — OpenCV Camera Pipeline Optimization #4059 <span class="text-[10px] text-zinc-500 ml-1">↗</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Credentials & Academics -->
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div>
+                    <h2 class="text-xl font-bold text-white border-b border-zinc-900 pb-3 tracking-tight mb-4">Credentials</h2>
+                    <ul class="space-y-2 text-sm text-zinc-400 font-mono">
+                        <li class="flex items-center gap-2">⚡ AWS Machine Learning Engineer - Associate</li>
+                        <li class="flex items-center gap-2">⚡ Databricks Generative AI Engineer</li>
+                        <li class="flex items-center gap-2">⚡ NVIDIA Associate: Generative AI LLMs</li>
+                        <li class="flex items-center gap-2">⚡ Microsoft Certified: Azure AI Engineer</li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-white border-b border-zinc-900 pb-3 tracking-tight mb-4">Achievements & Academics</h2>
+                    <div class="space-y-4 text-sm font-light text-zinc-400">
+                        <p><strong class="text-zinc-200">Spotle.AI Hackathon:</strong> Placed top 30 out of 27,000 global engineering participants (July 2019).</p>
+                        <p><strong class="text-zinc-200">M.S. in Computer Information Systems</strong><br><span class="font-mono text-xs text-indigo-400">University of Central Missouri | 2021 - 2022</span></p>
                     </div>
                 </div>
             </section>
@@ -198,41 +274,93 @@
 
         <!-- Right Side: Sticky Widgets -->
         <div class="space-y-12 lg:sticky lg:top-28">
-            <div class="bg-zinc-900/30 border border-zinc-900 rounded-2xl p-6 backdrop-blur-sm space-y-4">
+            
+            <!-- Skills Breakdown Block -->
+            <div id="skills-target-widget" class="bg-zinc-900/30 border border-zinc-900 rounded-2xl p-6 backdrop-blur-sm space-y-6 transition-all duration-500">
                 <h3 class="text-lg font-bold text-white border-b border-zinc-800 pb-2">Core Tech Stack</h3>
-                <div class="flex flex-wrap gap-1.5">
-                    <span class="bg-zinc-900 border border-zinc-800 text-xs px-2.5 py-1 rounded-md text-zinc-300">LangChain</span>
-                    <span class="bg-zinc-900 border border-zinc-800 text-xs px-2.5 py-1 rounded-md text-zinc-300">AutoGen</span>
-                    <span class="bg-zinc-900 border border-zinc-800 text-xs px-2.5 py-1 rounded-md text-zinc-300">AWS Bedrock</span>
-                    <span class="bg-zinc-900 border border-zinc-800 text-xs px-2.5 py-1 rounded-md text-zinc-300">Qdrant</span>
-                    <span class="bg-zinc-900 border border-zinc-800 text-xs px-2.5 py-1 rounded-md text-zinc-300">FastAPI</span>
+                <div class="space-y-4">
+                    <div>
+                        <span class="text-xs font-mono text-zinc-500 block mb-2 uppercase tracking-wider">AI / GenAI Platforms</span>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="bg-zinc-900 border border-zinc-800 text-xs px-2.5 py-1 rounded-md text-zinc-300">LangChain</span>
+                            <span class="bg-zinc-900 border border-zinc-800 text-xs px-2.5 py-1 rounded-md text-zinc-300">AutoGen</span>
+                            <span class="bg-zinc-900 border border-zinc-800 text-xs px-2.5 py-1 rounded-md text-zinc-300">AWS Bedrock</span>
+                            <span class="bg-zinc-900 border border-zinc-800 text-xs px-2.5 py-1 rounded-md text-zinc-300">GPT-4.1</span>
+                            <span class="bg-zinc-900 border border-zinc-800 text-xs px-2.5 py-1 rounded-md text-zinc-300">Qdrant</span>
+                            <span class="bg-zinc-900 border border-zinc-800 text-xs px-2.5 py-1 rounded-md text-zinc-300">RAG</span>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-xs font-mono text-zinc-500 block mb-2 uppercase tracking-wider">Backend Systems</span>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="bg-zinc-900 border border-zinc-800 text-xs px-2.5 py-1 rounded-md text-zinc-300">FastAPI</span>
+                            <span class="bg-zinc-900 border border-zinc-800 text-xs px-2.5 py-1 rounded-md text-zinc-300">Flask</span>
+                            <span class="bg-zinc-900 border border-zinc-800 text-xs px-2.5 py-1 rounded-md text-zinc-300">PySpark</span>
+                            <span class="bg-zinc-900 border border-zinc-800 text-xs px-2.5 py-1 rounded-md text-zinc-300">Python</span>
+                            <span class="bg-zinc-900 border border-zinc-800 text-xs px-2.5 py-1 rounded-md text-zinc-300">TypeScript</span>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <!-- Recruiter Interactive Chatbot Widget -->
+            <div class="bg-zinc-900/40 border border-zinc-900 rounded-2xl shadow-2xl flex flex-col overflow-hidden h-[450px]">
+                <div class="bg-zinc-900 px-4 py-3 border-b border-zinc-800 flex items-center gap-3">
+                    <div class="relative">
+                        <span class="w-2.5 h-2.5 rounded-full bg-indigo-500 block"></span>
+                        <span class="absolute top-0 left-0 w-2.5 h-2.5 rounded-full bg-indigo-400 block animate-ping"></span>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold text-white font-mono uppercase tracking-wide">Sai's Agentic Bot</h4>
+                        <p class="text-[10px] text-zinc-500">Trained on resume telemetry metrics</p>
+                    </div>
+                </div>
+
+                <div id="chat-feed" class="flex-1 p-4 overflow-y-auto text-xs space-y-3 flex flex-col">
+                    <div class="bg-zinc-900 text-zinc-300 p-3 rounded-xl max-w-[85%] self-start border border-zinc-800/60 leading-relaxed">
+                        Hi, I am Sai's portfolio bot. Select a quick action query below or type your vetting requirements directly into the terminal feed.
+                    </div>
+                </div>
+
+                <div id="chip-container" class="p-2 bg-zinc-950/80 border-t border-zinc-900/60 flex flex-wrap gap-1 max-h-[85px] overflow-y-auto">
+                    <button data-chip="opensource" class="bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-[10px] px-2 py-1 rounded-md text-zinc-400 hover:text-white transition-all text-left">View Open Source Projects</button>
+                    <button data-chip="agentic" class="bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-[10px] px-2 py-1 rounded-md text-zinc-400 hover:text-white transition-all text-left">What's your Agentic AI stack?</button>
+                    <button data-chip="rag" class="bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-[10px] px-2 py-1 rounded-md text-zinc-400 hover:text-white transition-all text-left">Tell me about your RAG metrics</button>
+                </div>
+
+                <div class="p-3 bg-zinc-900 border-t border-zinc-800 flex gap-2">
+                    <input id="chat-input" type="text" placeholder="Type a message (e.g. open source, kpmg, lerobot)..." class="flex-1 bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-1.5 text-xs text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-indigo-500 transition-colors">
+                    <button id="chat-submit" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs px-3 py-1.5 rounded-lg font-medium transition-colors">Send</button>
+                </div>
+            </div>
+
         </div>
     </main>
 
     <!-- Footer Space -->
     <footer class="bg-zinc-950 text-center py-16 text-xs text-zinc-600 border-t border-zinc-900/40 tracking-wider uppercase">
-        <p>&copy; 2026 Sai Dari. Telemetry tracking runtime online.</p>
+        <p>&copy; 2026 Sai Dari. Built with GitHub Pages & Tailwind CSS.</p>
     </footer>
 
-    <!-- Robot Scroll Core Engine Controller -->
+    <!-- Typewriter Engine, Particle Burst, & Scroll Pipeline Runtime Controller -->
     <script type="module">
+        import PortfolioChatbot from './chatbot.js';
+
+        // Particle Tracking Cache State
         let particles = [];
         let canvas, ctx;
-        let lastScrollY = window.scrollY;
-        let runningTimeout;
+        const activeNodeStates = { embedding: false, vector: false, saidari: false, skills: false };
 
-        class MatrixSpark {
-            constructor(x, y) {
+        class MatrixParticle {
+            constructor(x, y, color) {
                 this.x = x;
                 this.y = y;
-                this.size = Math.random() * 2 + 1;
-                // Launch backward relative to forward robot motion
-                this.vx = -1.5 - Math.random() * 3;
-                this.vy = (Math.random() - 0.5) * 3;
+                this.size = Math.random() * 3 + 1.5;
+                this.vx = (Math.random() - 0.5) * 7;
+                this.vy = (Math.random() - 0.5) * 7;
+                this.color = color;
                 this.alpha = 1.0;
-                this.decay = Math.random() * 0.04 + 0.03;
+                this.decay = Math.random() * 0.02 + 0.015;
             }
             update() {
                 this.x += this.vx;
@@ -242,7 +370,8 @@
             draw() {
                 ctx.save();
                 ctx.globalAlpha = this.alpha;
-                ctx.fillStyle = Math.random() > 0.5 ? '#6366f1' : '#22d3ee'; // Cyber trail palette
+                ctx.fillStyle = this.color;
+                // Digital square particles for a clean cyber matrix look
                 ctx.fillRect(this.x, this.y, this.size, this.size);
                 ctx.restore();
             }
@@ -254,75 +383,126 @@
             canvas.height = canvas.parentElement.offsetHeight;
         }
 
-        function renderLoop() {
+        function executeParticleBurst(element, color) {
+            if (!canvas || !element) return;
+            const containerRect = canvas.parentElement.getBoundingClientRect();
+            const nodeRect = element.getBoundingClientRect();
+            
+            const targetX = (nodeRect.left + nodeRect.width / 2) - containerRect.left;
+            const targetY = (nodeRect.top + nodeRect.height / 2) - containerRect.top;
+
+            for (let i = 0; i < 35; i++) {
+                particles.push(new MatrixParticle(targetX, targetY, color));
+            }
+        }
+
+        function pipelineRenderLoop() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles = particles.filter(p => p.alpha > 0);
             particles.forEach(p => {
                 p.update();
                 p.draw();
             });
-            requestAnimationFrame(renderLoop);
+            requestAnimationFrame(pipelineRenderLoop);
         }
 
         document.addEventListener("DOMContentLoaded", () => {
+            const bot = new PortfolioChatbot({
+                feedId: 'chat-feed',
+                inputId: 'chat-input',
+                submitBtnId: 'chat-submit',
+                chipContainerId: 'chip-container'
+            });
+            bot.init();
+            
+            // Core canvas wiring
             canvas = document.getElementById('pipeline-canvas');
             ctx = canvas.getContext('2d');
             syncCanvasBounds();
             window.addEventListener('resize', syncCanvasBounds);
-            requestAnimationFrame(renderLoop);
+            requestAnimationFrame(pipelineRenderLoop);
 
-            initRobotTelemetry();
+            initScrollPipeline();
         });
 
-        function initRobotTelemetry() {
-            const robotContainer = document.getElementById('scroll-robot');
-            const robotVisual = document.getElementById('robot-visual');
-            const trackLine = document.getElementById('pipeline-progress-line');
-            const container = document.getElementById('pipeline-container');
+        function initScrollPipeline() {
+            const progressBar = document.getElementById('pipeline-progress-line');
+            const nodes = {
+                embedding: document.getElementById('node-embedding'),
+                vector: document.getElementById('node-vector'),
+                saidari: document.getElementById('node-saidari'),
+                skills: document.getElementById('node-skills')
+            };
+            const skillsWidget = document.getElementById('skills-target-widget');
 
             window.addEventListener('scroll', () => {
-                const totalScrollable = document.documentElement.scrollHeight - window.innerHeight;
-                if (totalScrollable <= 0) return;
+                const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+                if (totalHeight <= 0) return;
 
-                const scrollRatio = window.scrollY / totalScrollable;
-                
-                // Keep inside track boundaries padding safely
-                const padLeft = 48; // equivalent to px-12 flanking lines
-                const trackWidth = container.offsetWidth - (padLeft * 2);
-                const currentRobotX = padLeft + (scrollRatio * trackWidth);
+                const scrollRatio = window.scrollY / totalHeight;
+                const percentage = Math.min(Math.max(scrollRatio * 100, 0), 100);
 
-                // Update physical position across wire track
-                robotContainer.style.left = `${currentRobotX}px`;
-                trackLine.style.width = `${scrollRatio * 100}%`;
+                progressBar.style.width = `${percentage}%`;
 
-                // Fire sparks if active movement deltas happen
-                if (Math.abs(window.scrollY - lastScrollY) > 1) {
-                    robotVisual.classList.add('robot-running');
-                    
-                    // Add exhaust trail sparks relative to the container coordinates
-                    const containerRect = container.getBoundingClientRect();
-                    const robotRect = robotContainer.getBoundingClientRect();
-                    
-                    const particleEmitX = (robotRect.left - containerRect.left) + 4;
-                    const particleEmitY = (robotRect.top - containerRect.top) + 24; // floor tracking layer
-
-                    for (let i = 0; i < 3; i++) {
-                        particles.push(new MatrixSpark(particleEmitX, particleEmitY));
+                // Stage 01: Embedding (Cyan Burst)
+                if (percentage >= 5) {
+                    if (!activeNodeStates.embedding) {
+                        activeNodeStates.embedding = true;
+                        executeParticleBurst(nodes.embedding, '#22d3ee');
                     }
-
-                    // Clear motion jogging frame once scrolling hits friction zero
-                    clearTimeout(runningTimeout);
-                    runningTimeout = setTimeout(() => {
-                        robotVisual.classList.remove('robot-running');
-                    }, 120);
+                    nodes.embedding.classList.add('active', 'pipeline-glow', 'opacity-100', 'scale-105');
+                } else {
+                    activeNodeStates.embedding = false;
+                    nodes.embedding.classList.remove('active', 'pipeline-glow', 'opacity-100', 'scale-105');
                 }
 
-                lastScrollY = window.scrollY;
+                // Stage 02: Vector Indexing (Indigo Burst)
+                if (percentage >= 30) {
+                    if (!activeNodeStates.vector) {
+                        activeNodeStates.vector = true;
+                        executeParticleBurst(nodes.vector, '#6366f1');
+                    }
+                    nodes.vector.classList.add('active', 'pipeline-glow', 'opacity-100', 'scale-105');
+                } else {
+                    activeNodeStates.vector = false;
+                    nodes.vector.classList.remove('active', 'pipeline-glow', 'opacity-100', 'scale-105');
+                }
+
+                // Stage 03: Sai Dari Execution Core (Purple Burst)
+                if (percentage >= 60) {
+                    if (!activeNodeStates.saidari) {
+                        activeNodeStates.saidari = true;
+                        executeParticleBurst(nodes.saidari, '#a855f7');
+                    }
+                    nodes.saidari.classList.add('active', 'pipeline-glow', 'opacity-100', 'scale-105');
+                } else {
+                    activeNodeStates.saidari = false;
+                    nodes.saidari.classList.remove('active', 'pipeline-glow', 'opacity-100', 'scale-105');
+                }
+
+                // Stage 04: Synthesized Skills Matrix (Emerald Burst)
+                if (percentage >= 85) {
+                    if (!activeNodeStates.skills) {
+                        activeNodeStates.skills = true;
+                        executeParticleBurst(nodes.skills, '#10b981');
+                    }
+                    nodes.skills.classList.add('active', 'pipeline-glow', 'opacity-100', 'scale-105');
+                    skillsWidget.classList.add('ring-2', 'ring-emerald-500/30', 'bg-zinc-900/60');
+                } else {
+                    activeNodeStates.skills = false;
+                    nodes.skills.classList.remove('active', 'pipeline-glow', 'opacity-100', 'scale-105');
+                    skillsWidget.classList.remove('ring-2', 'ring-emerald-500/30', 'bg-zinc-900/60');
+                }
             });
         }
 
-        // Title Typewriter Logic
-        const roles = ["Agentic Multi-Agent Frameworks.", "Enterprise RAG Architectures.", "Embodied Robotics Pipelines."];
+        // Title Typewriter Component
+        const roles = [
+            "Agentic Multi-Agent Frameworks.",
+            "Enterprise RAG Architectures.",
+            "HIPAA-Compliant AI Pipelines.",
+            "LLMOps Evaluation & Metrics."
+        ];
         let roleIdx = 0, charIdx = 0, isDeleting = false;
         const target = document.getElementById("typewriter-text");
 
@@ -335,6 +515,7 @@
             else if (isDeleting && charIdx === 0) { isDeleting = false; roleIdx = (roleIdx + 1) % roles.length; speed = 300; }
             setTimeout(playTypewriter, speed);
         }
+
         setTimeout(playTypewriter, 400);
     </script>
 </body>
